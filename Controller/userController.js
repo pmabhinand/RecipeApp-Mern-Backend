@@ -1,0 +1,53 @@
+//import model
+const users = require('../Model/userSchema')
+
+
+//logic for register
+exports.register = async(req,res)=>{
+  //destructuring user data from request body
+   const {username,email,password} = req.body
+
+  //checking if user already exist
+  try{ const existUser = await users.findOne({email})
+   //sending response if user already exists
+   if(existUser){
+    res.status(406).json('Account already exists,Please log in')
+   }
+   //storing register data if user not found
+   else{
+    //creating an object for model
+    const newUser = new users({
+      username,
+      email,
+      password,
+      profile:""
+    })
+    //save  function in mongoose - to permenently store this data in mongodb
+    await newUser.save()
+    //sending response after storing data
+    res.status(200).json(newUser)
+   }}
+   catch(error){
+     res.status(404).json('Register request failed due to',error)
+   }
+
+}
+
+
+//logic for login
+exports.login = async(req,res)=>{
+   const {email,password} = req.body
+
+  try{ const existingUser = await users.findOne({email,password})
+
+   if(existingUser){
+     res.status(200).json({
+       existingUser
+     })
+   }
+   else{
+    res.status(406).json('Incorrect email address or password')
+   }}catch(error){
+     res.status(401).json('Login failed due to',error)
+   }
+}
