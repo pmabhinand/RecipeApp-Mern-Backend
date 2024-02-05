@@ -1,6 +1,7 @@
 //import mongoose
 const mongoose = require('mongoose')
 
+//creating schema(structure)
 const userSchema = new mongoose.Schema({
     username:{
         type:String,

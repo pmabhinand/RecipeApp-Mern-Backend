@@ -1,6 +1,9 @@
 //import model
 const users = require('../Model/userSchema')
 
+//import jwt
+const jwt = require('jsonwebtoken')
+
 
 //logic for register
 exports.register = async(req,res)=>{
@@ -41,8 +44,11 @@ exports.login = async(req,res)=>{
   try{ const existingUser = await users.findOne({email,password})
 
    if(existingUser){
+      const token = jwt.sign({userId:existingUser._id},"pmAbhinand784")
+
      res.status(200).json({
-       existingUser
+       existingUser,
+       token
      })
    }
    else{
