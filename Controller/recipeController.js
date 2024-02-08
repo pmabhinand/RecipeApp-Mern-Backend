@@ -82,3 +82,39 @@ exports.getMyRecipe = async(req,res)=>{
     res.status(401).json('request failed due to ',error)
   }
 }
+
+//logic for getting recipes based on search item
+
+exports.getSearchRecipe = async(req,res)=>{
+  const searchItem = req.query.search
+  console.log(searchItem);
+ 
+  const query = {
+    recipeName:{
+      $regex:searchItem , $options:'i'
+    }
+  }
+
+  try{
+  const searchRecipe = await recipes.find(query)
+  res.status(200).json(searchRecipe)
+
+  }catch(error){
+    res.status(401).json('request failed due to ',error)
+  }
+
+}
+
+
+//logic for delete recipe
+exports.deleteMyRecipe = async(req,res)=>{
+  const {id} = req.params
+
+try{
+  const removedRecipe = await recipes.findByIdAndDelete({_id:id})
+  res.status(200).json(removedRecipe)
+}catch(error){
+  res.status(401).json('request failed due to ',error)
+}
+
+}

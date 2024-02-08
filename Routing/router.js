@@ -6,6 +6,8 @@ const userController = require('../Controller/userController')
 
 const recipeController = require('../Controller/recipeController')
 
+const saveController = require('../Controller/saveController')
+
 //import jwtMiddleware
 const jwtMiddleware = require('../Middleware/jwtMiddleware')
 
@@ -36,6 +38,23 @@ router.get('/recipe/all-recipe',jwtMiddleware,recipeController.getAllRecipe)
 
 //get recipes for my recipes page
 router.get('/user/my-recipe',jwtMiddleware,recipeController.getMyRecipe)
+
+
+//get recipes based on search item
+router.get('/recipe/search',recipeController.getSearchRecipe)
+
+
+//delete recipe
+router.delete('/recipe/remove/:id',jwtMiddleware,recipeController.deleteMyRecipe)
+
+//for storing saved recipe
+router.post('/save/add',jwtMiddleware,saveController.saveRecipe)
+
+//for getting saved recipes
+router.get('/save/my-save',jwtMiddleware,saveController.getMySavedRecipes)
+
+//for deleting saved recipe
+router.delete('/save/remove/:id',jwtMiddleware,saveController.deleteSavedRecipe)
 
 
 //export router
