@@ -118,3 +118,22 @@ try{
 }
 
 }
+
+
+//logic for updating recipe
+exports.updateMyRecipe = async(req,res)=>{
+  const userId = req.uniqueId
+
+  const {recipeName,introduction,category,ingredients,preparation,time,url,id} = req.body
+
+try{
+  const updateRecipe = await recipes.findByIdAndUpdate({_id:id},{recipeName,introduction,category,ingredients,preparation,time,url,userId},{new:true})
+
+  await updateRecipe.save()
+  res.status(200).json(updateRecipe)
+  
+}catch(error){
+  res.status(401).json('request failed due to ',error)
+}  
+
+}

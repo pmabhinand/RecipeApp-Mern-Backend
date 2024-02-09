@@ -57,3 +57,24 @@ exports.login = async(req,res)=>{
      res.status(401).json('Login failed due to',error)
    }
 }
+
+
+//logic for uploading image
+exports.updateProfile = async(req,res)=>{
+  const userId = req.uniqueId
+
+  const {username,email,password} = req.body
+
+  const profile = req.file.filename
+
+  try{
+  
+  const uploadimage = await users.findByIdAndUpdate({_id:userId},{username,email,password,profile},{new:true}) 
+
+  await uploadimage.save()
+  res.status(200).json(uploadimage)
+
+  }catch(error){
+    res.status(401).json('request failed due to ',error)
+  }
+}

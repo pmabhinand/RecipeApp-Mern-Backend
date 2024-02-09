@@ -11,6 +11,9 @@ const saveController = require('../Controller/saveController')
 //import jwtMiddleware
 const jwtMiddleware = require('../Middleware/jwtMiddleware')
 
+//import multer
+const multerConfig = require('../Middleware/multerMiddleware')
+
 //create an object for Router() class in the express module
 const router = new express.Router()
 
@@ -55,6 +58,12 @@ router.get('/save/my-save',jwtMiddleware,saveController.getMySavedRecipes)
 
 //for deleting saved recipe
 router.delete('/save/remove/:id',jwtMiddleware,saveController.deleteSavedRecipe)
+
+//for updating recipe
+router.put('/recipe/update',jwtMiddleware,recipeController.updateMyRecipe)
+
+//for updating profile image
+router.put('/user/update',jwtMiddleware,multerConfig.single("profile"),userController.updateProfile)
 
 
 //export router
