@@ -66,5 +66,7 @@ router.put('/recipe/update',jwtMiddleware,recipeController.updateMyRecipe)
 router.put('/user/update',jwtMiddleware,multerConfig.single("profile"),userController.updateProfile)
 
 
+
+
 //export router
 module.exports = router

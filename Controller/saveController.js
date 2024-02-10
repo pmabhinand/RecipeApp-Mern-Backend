@@ -8,25 +8,23 @@ exports.saveRecipe = async(req,res)=>{
 
     const userId = req.uniqueId
 
-try{
-    const mySavedRecipe = new saves({
-        recipeName,
-       introduction,
-       category,
-       ingredients,
-       preparation,
-       time,
-       url,
-       userId
-    })
-
-    await mySavedRecipe.save()
-
-    res.status(200).json(mySavedRecipe)
-
-}catch(error){
-    res.status(401).json('request failed due to ',error)
-}
+    try{
+        const mySavedRecipe = new saves({
+            recipeName,
+           introduction,
+           category,
+           ingredients,
+           preparation,
+           time,
+           url,
+           userId
+        })
+    
+        await mySavedRecipe.save()
+        res.status(200).json(mySavedRecipe)  
+    }catch(error){
+        res.status(401).json('request failed due to ',error)
+    }       
 
 }
 
@@ -58,3 +56,4 @@ try{
 } 
 
 }
+

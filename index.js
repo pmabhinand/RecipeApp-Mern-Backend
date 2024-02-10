@@ -25,6 +25,9 @@ tastyServer.use(express.json())
 //server using the router
 tastyServer.use(router)
 
+//server using upload folder
+tastyServer.use('/upload',express.static('./upload'))
+
 //customize port
 const PORT = 4001 || process.env
 
