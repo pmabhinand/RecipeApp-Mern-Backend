@@ -8,7 +8,14 @@ exports.saveRecipe = async(req,res)=>{
 
     const userId = req.uniqueId
 
-    try{
+   try{
+
+    const existSaved =await saves.findOne({userId,recipeName})
+
+    if(existSaved){
+        res.status(406).json('Recipe already saved')
+    }
+    else{
         const mySavedRecipe = new saves({
             recipeName,
            introduction,
@@ -18,15 +25,19 @@ exports.saveRecipe = async(req,res)=>{
            time,
            url,
            userId
-        })
-    
+        }) 
+           
         await mySavedRecipe.save()
         res.status(200).json(mySavedRecipe)  
-    }catch(error){
-        res.status(401).json('request failed due to ',error)
-    }       
+
+    }
+
+  }catch(error){
+    res.status(401).json('request failed due to ',error)
+} 
 
 }
+
 
 
 //logic for getting saved recipes
@@ -43,6 +54,7 @@ exports.getMySavedRecipes = async(req,res)=>{
 } 
 
 }
+
 
 
 //logic for deleting saved recipe
